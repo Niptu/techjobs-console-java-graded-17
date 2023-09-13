@@ -71,11 +71,14 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
+        //convert to lowercase for case-insensitive
+        String lowercaseValue = value.toLowerCase();
+
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column).toLowerCase(); //convert column to lowercase
 
-            if (aValue.contains(value)) {
+            if (aValue.contains(lowercaseValue)) {
                 jobs.add(row);
             }
         }
@@ -95,12 +98,21 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-//        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-//
-//        for (HashMap<String,String> job : allJobs) {
-//            if (containsValue(job, value)) jobs.add(job);
-//        }
-        return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        //convert to lover case
+        String lowercaseValue = value.toLowerCase();
+
+        for (HashMap<String,String> row : allJobs) { //this loop goes through all jobs one by one from first to last (row = single job at each time
+            //go through columns and check if contains lover Value
+            for (String key : row.keySet()) { //inside each job(row) there differet info(columns)
+                String cellValue = row.get(key).toLowerCase(); //here we look at piece of info (colums)("key") for curent jod ("row") and make it lover case
+                if (cellValue.contains(lowercaseValue)) { // looking for lover case
+                    jobs.add(row); //save here all jobs we found and match
+                    break;
+                }
+            }
+        }
+        return jobs;
     }
 
     /**
